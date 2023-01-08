@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
@@ -15,10 +15,12 @@ function App() {
    ]);
 
    const [title, setTitle] = useState('');
+   const bodyInputRef = useRef();
 
    const addNewPost = (e) => {
       e.preventDefault()
       console.log(title);
+      console.log(bodyInputRef.current.value);
    }
 
    return (
@@ -31,7 +33,9 @@ function App() {
                type='text'
                placeholder="Назва посту"
             />
+            {/* Не Керований компонент */}
             <MyInput
+               ref={bodyInputRef}
                type='text'
                placeholder="Опис посту"
             />
