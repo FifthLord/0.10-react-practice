@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+// import { useRef } from "react";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
@@ -14,13 +15,18 @@ function App() {
       { id: 3, title: "JS 3", body: 'Description' },
    ]);
 
-   const [title, setTitle] = useState('');
-   const bodyInputRef = useRef();
+   //*двусторонє звя'зування Керованого компоненту
+   const [post, setPost] = useState({ title: '', body: '', });
+
+   //*односторонє звя'зування Не керованого компоненту
+   // const bodyInputRef = useRef();
 
    const addNewPost = (e) => {
       e.preventDefault()
-      console.log(title);
-      console.log(bodyInputRef.current.value);
+      //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
+      setPosts([...posts, { ...post, id: Date.now() }]);
+      //*обнуляємо інпути
+      setPost({ title: '', body: '', })
    }
 
    return (
@@ -28,14 +34,20 @@ function App() {
          <form>
             {/* Керований компонент */}
             <MyInput
-               value={title}
-               onChange={e => setTitle(e.target.value)}
+               value={post.title}
+               onChange={e => setPost({ ...post, title: e.target.value })}
                type='text'
                placeholder="Назва посту"
             />
             {/* Не Керований компонент */}
-            <MyInput
+            {/* <MyInput
                ref={bodyInputRef}
+               type='text'
+               placeholder="Опис посту"
+            /> */}
+            <MyInput
+               value={post.body}
+               onChange={e => setPost({ ...post, body: e.target.value })}
                type='text'
                placeholder="Опис посту"
             />
