@@ -19,13 +19,18 @@ function App() {
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
       setPosts([...posts, newPost]);
+   };
+
+   //*отримуємо post з дочірнього компоненту
+   const removePost = (post) => {
+      setPosts(posts.filter(p => p.id !== post.id));
    }
 
 
    return (
       <div className="App">
          <PostForm create={createPost} />
-         <PostList posts={posts} title='Пости про JS' />
+         <PostList remove={removePost} posts={posts} title='Пости про JS' />
       </div>
    );
 }
