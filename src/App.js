@@ -30,7 +30,10 @@ function App() {
    return (
       <div className="App">
          <PostForm create={createPost} />
-         <PostList remove={removePost} posts={posts} title='Пости про JS' />
+         {posts.length !== 0
+            ? <PostList remove={removePost} posts={posts} title='Пости про JS' />
+            : <h2 style={{ textAlign: 'center' }}>Пости не знайдені!</h2>
+         }
       </div>
    );
 }
