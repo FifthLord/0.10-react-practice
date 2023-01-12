@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import PostForm from "./components/PostForm";
-// import { useRef, useState  } from "react";
 import PostList from "./components/PostList";
-// import MyButton from "./components/UI/button/MyButton";
-// import MyInput from "./components/UI/input/MyInput";
-// import PostItem from "./components/PostItem";
-// import ClassCounter from "./components/ClassCounter";
-// import Counter from "./components/Counter";
+import MySelect from "./components/UI/select/MySelect";
 import './styles/App.css'
 
 function App() {
@@ -30,6 +25,16 @@ function App() {
    return (
       <div className="App">
          <PostForm create={createPost} />
+         <hr style={{ margin: '15px 0' }} />
+         <div>
+            <MySelect
+               defaultValue="Сортування"
+               options={[
+                  { value: 'title', name: "По назві" },
+                  { value: 'body', name: "По опису" }
+               ]}
+            />
+         </div>
          {posts.length !== 0
             ? <PostList remove={removePost} posts={posts} title='Пости про JS' />
             : <h2 style={{ textAlign: 'center' }}>Пости не знайдені!</h2>
