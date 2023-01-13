@@ -11,6 +11,8 @@ function App() {
       { id: 3, title: "JS 3", body: 'Description' },
    ]);
 
+   const [selectedSort, setSelectedSort] = useState('')
+
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
       setPosts([...posts, newPost]);
@@ -21,6 +23,10 @@ function App() {
       setPosts(posts.filter(p => p.id !== post.id));
    }
 
+   const sortPosts = (sort) => {
+      setSelectedSort(sort)
+      setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
+   }
 
    return (
       <div className="App">
@@ -28,6 +34,8 @@ function App() {
          <hr style={{ margin: '15px 0' }} />
          <div>
             <MySelect
+               value={selectedSort}
+               onChange={sortPosts}
                defaultValue="Сортування"
                options={[
                   { value: 'title', name: "По назві" },
