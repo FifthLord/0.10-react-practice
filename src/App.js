@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
+import MyButton from "./components/UI/button/MyButton";
+import MyModal from "./components/UI/MyModal/MyModal";
 import './styles/App.css'
 
 function App() {
@@ -11,7 +13,8 @@ function App() {
       { id: 3, title: "JS 3", body: 'Description' },
    ]);
 
-   const [filter, setFilter] = useState({ sort: '', query: '' })
+   const [filter, setFilter] = useState({ sort: '', query: '' });
+   const [modal, setModal] = useState(false);
 
    //додавання в масив відсортованих постів при зміні поля сортування в формі, або зміні поста
    const sortedPosts = useMemo(() => {
@@ -29,6 +32,7 @@ function App() {
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
       setPosts([...posts, newPost]);
+      setModal(false);
    };
 
    //*отримуємо post з дочірнього компоненту
@@ -38,7 +42,12 @@ function App() {
 
    return (
       <div className="App">
-         <PostForm create={createPost} />
+         <MyButton style={{ marginTop: 30 }} onClick={() => setModal(true)}>
+            Створити користувача
+         </MyButton>
+         <MyModal visible={modal} setVisible={setModal}>
+            <PostForm create={createPost} />
+         </MyModal>
          <hr style={{ margin: '15px 0' }} />
          <PostFilter
             filter={filter}
