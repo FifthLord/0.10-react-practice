@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyModal from "./components/UI/MyModal/MyModal";
+import { usePosts } from "./hooks/usePosts";
 import './styles/App.css'
 
 function App() {
@@ -15,19 +16,7 @@ function App() {
 
    const [filter, setFilter] = useState({ sort: '', query: '' });
    const [modal, setModal] = useState(false);
-
-   //додавання в масив відсортованих постів при зміні поля сортування в формі, або зміні поста
-   const sortedPosts = useMemo(() => {
-      if (filter.sort) {
-         return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-      }
-      return posts;
-   }, [filter.sort, posts]);
-
-   //фільтрація масиву відсортованих постів при зміні значення в інпуті або в відсортованих постах 
-   const sortedAndSearchedPosts = useMemo(() => {
-      return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
-   }, [filter.query, sortedPosts]);
+   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
