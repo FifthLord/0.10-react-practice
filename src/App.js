@@ -25,6 +25,7 @@ function App() {
       setModal(false);
    };
 
+   //*робимо запит на сервер, отримаємо відповідь у response.data
    async function fetchPosts() {
       const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
       setPosts(response.data)
