@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
@@ -17,7 +17,11 @@ function App() {
 
    const [filter, setFilter] = useState({ sort: '', query: '' });
    const [modal, setModal] = useState(false);
-   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
+   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+
+   useEffect(() => {
+      fetchPosts()
+   }, [])
 
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
@@ -38,7 +42,6 @@ function App() {
 
    return (
       <div className="App">
-         <button onClick={fetchPosts}>GET POSTS</button>
          <MyButton style={{ marginTop: 30 }} onClick={() => setModal(true)}>
             Створити користувача
          </MyButton>
