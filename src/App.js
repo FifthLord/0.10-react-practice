@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import PostService from "./API/PostService";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
@@ -31,8 +31,8 @@ function App() {
 
    //*робимо запит на сервер, отримаємо відповідь у response.data
    async function fetchPosts() {
-      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      setPosts(response.data)
+      const posts = await PostService.getAll();
+      setPosts(posts);
    }
 
    //*отримуємо post з дочірнього компоненту
