@@ -18,6 +18,7 @@ function App() {
    const [filter, setFilter] = useState({ sort: '', query: '' });
    const [modal, setModal] = useState(false);
    const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+   const [isPostsLoading, setIsPostLoading] = useState(false);
 
    useEffect(() => {
       fetchPosts()
@@ -31,8 +32,10 @@ function App() {
 
    //*робимо запит на сервер, отримаємо відповідь у response.data
    async function fetchPosts() {
+      setIsPostLoading(true);
       const posts = await PostService.getAll();
       setPosts(posts);
+      setIsPostLoading(false);
    }
 
    //*отримуємо post з дочірнього компоненту
@@ -53,9 +56,11 @@ function App() {
             filter={filter}
             setFilter={setFilter}
          />
-         {
-            <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Пости про JS' />
+         {isPostsLoading
+            ? <h2>Йде завантаження...</h2>
+            : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Пости про JS' />
          }
+
       </div>
    );
 }
