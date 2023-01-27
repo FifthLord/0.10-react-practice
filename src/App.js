@@ -4,6 +4,7 @@ import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
+import Loader from "./components/UI/loader/Loader";
 import MyModal from "./components/UI/MyModal/MyModal";
 import { usePosts } from "./hooks/usePosts";
 import './styles/App.css'
@@ -33,9 +34,11 @@ function App() {
    //*робимо запит на сервер, отримаємо відповідь у response.data
    async function fetchPosts() {
       setIsPostLoading(true);
-      const posts = await PostService.getAll();
-      setPosts(posts);
-      setIsPostLoading(false);
+      setTimeout(async () => {
+         const posts = await PostService.getAll();
+         setPosts(posts);
+         setIsPostLoading(false);
+      }, 1000);
    }
 
    //*отримуємо post з дочірнього компоненту
@@ -57,7 +60,7 @@ function App() {
             setFilter={setFilter}
          />
          {isPostsLoading
-            ? <h2>Йде завантаження...</h2>
+            ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}><Loader /></div>
             : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Пости про JS' />
          }
 
