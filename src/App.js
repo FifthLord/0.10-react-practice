@@ -68,9 +68,12 @@ function App() {
             ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}><Loader /></div>
             : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Пости про JS' />
          }
-         {pagesArr.map(p =>
-            <MyButton>{p}</MyButton>)
-         }
+         <div className="page__wrapper">
+            {pagesArr.map(p =>
+               <span className="page">{p}</span>)
+            }
+         </div>
+
       </div>
    );
 }
