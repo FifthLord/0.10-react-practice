@@ -35,7 +35,7 @@ function App() {
 
    useEffect(() => {
       fetchPosts()
-   }, [])
+   }, [page])
 
    const createPost = (newPost) => {
       //*розгортаємо старі пости й додаємо туди новий об'єкт з новим ІД
@@ -46,6 +46,10 @@ function App() {
    //*отримуємо post з дочірнього компоненту
    const removePost = (post) => {
       setPosts(posts.filter(p => p.id !== post.id));
+   }
+
+   const changePage = (page) => {
+      setPage(page)
    }
 
    return (
@@ -70,7 +74,12 @@ function App() {
          }
          <div className="page__wrapper">
             {pagesArr.map(p =>
-               <span className="page">{p}</span>)
+               <span
+                  onClick={() => changePage(p)}
+                  key={p}
+                  className={page === p ? 'page page__current' : 'page'}>
+                  {p}
+               </span>)
             }
          </div>
 
