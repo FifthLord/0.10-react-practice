@@ -6,6 +6,7 @@ import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import Loader from "./components/UI/loader/Loader";
 import MyModal from "./components/UI/MyModal/MyModal";
+import Pagination from "./components/UI/pagination/Pagination";
 import { useFetching } from "./hooks/useFetching";
 import { usePosts } from "./hooks/usePosts";
 import './styles/App.css'
@@ -24,7 +25,7 @@ function App() {
    const [limit, setLimit] = useState(10);
    const [page, setPage] = useState(1);
    const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
-   let pagesArr = getPagesArr(totalPages);
+
 
    const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
       const response = await PostService.getAll(limit, page);
@@ -72,16 +73,11 @@ function App() {
             ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}><Loader /></div>
             : <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Пости про JS' />
          }
-         <div className="page__wrapper">
-            {pagesArr.map(p =>
-               <span
-                  onClick={() => changePage(p)}
-                  key={p}
-                  className={page === p ? 'page page__current' : 'page'}>
-                  {p}
-               </span>)
-            }
-         </div>
+         <Pagination
+            page={page}
+            changePage={changePage}
+            totalPages={totalPages}
+         />
 
       </div>
    );
