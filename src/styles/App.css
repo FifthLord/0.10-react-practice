@@ -64,3 +64,8 @@
 .navbar__links{
    margin-left: auto;
 }
+
+.post__btn{
+   display: flex;
+   padding: 5px;
+}
