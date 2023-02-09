@@ -1,14 +1,23 @@
 import React from 'react';
+import { useContext } from 'react';
 import MyButton from '../components/UI/button/MyButton';
 import MyInput from '../components/UI/input/MyInput';
+import { AuthContext } from '../context';
 
 const Login = () => {
+   const { isAuth, setIsAuth } = useContext(AuthContext);
+   const login = event => {
+      event.preventDefault();
+      setIsAuth(true);
+   }
+
+
    return (
       <div>
          <h2>Сторінка логіну</h2>
-         <form>
-            <MyInput type="text" placeholder='ввндіть логін' />
-            <MyInput type="password" placeholder='ввндіть пароль' />
+         <form onSubmit={login}>
+            <MyInput type="text" placeholder='введіть логін' />
+            <MyInput type="password" placeholder='введіть пароль' />
             <MyButton>Увійти</MyButton>
          </form>
       </div>
